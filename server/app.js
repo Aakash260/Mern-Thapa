@@ -1,20 +1,32 @@
+
+//initial code
 const express=require('express')
 const app=express();
-const mongoose=require('mongoose')
-const DB=`mongodb+srv://akashnirwan26:skrschool26@cluster0.4lyuejn.mongodb.net/mernstack?retryWrites=true&w=majority`
-mongoose.connect(DB).then(()=>{
-    console.log('connected mongo')
-}).catch((err)=>{
-    console.log(err)
-})
+
+//encrypt dotenv 
+const dotenv=require('dotenv')
+dotenv.config({path:'./config.env'})
+const PORT=process.env.PORT
+
+
+//db connection
+require('./db/conn')
+
+//middleware so post req can send json data
+  app.use(express.json());
+
+//create route
+app.use(require('./router/auth'))
+
+//middleware-example
  const middleware=(req,res,next)=>{
     console.log('ok')
     next();
  }
 
-
+//routes
 app.get('/',(req,res)=>{
-    res.send('Hello World from Home')
+    res.send('Hello World from Home ')
 })
 app.get('/about',middleware,(req,res)=>{
     res.send('Hello World from About Me')
@@ -26,7 +38,8 @@ app.get('/login',(req,res)=>{
     res.send('Hello World from Login')
 })
 
-app.listen(3000,(req,res)=>{
+//listening route
+app.listen(PORT,(req,res)=>{
     console.log('server running')
 
 })
