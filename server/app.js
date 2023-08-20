@@ -41,5 +41,4 @@ app.get('/login',(req,res)=>{
 //listening route
 app.listen(PORT,(req,res)=>{
     console.log('server running')
-
 })
